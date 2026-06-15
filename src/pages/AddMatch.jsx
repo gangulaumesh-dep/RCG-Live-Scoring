@@ -28,11 +28,25 @@ function AddMatch() {
     }
   ])
  }
-  const [bowler1, setBowler1] = useState('')
-  const [overs1, setOvers1] = useState('')
-  const [runsGiven1, setRunsGiven1] = useState('')
-  const [wickets1, setWickets1] = useState('')
-  
+  const [bowling, setBowling] = useState([
+  {
+    player: '',
+    overs: '',
+    runs: '',
+    wickets: ''
+  }
+ ])
+   const addBowler = () => {
+  setBowling([
+    ...bowling,
+    {
+      player: '',
+      overs: '',
+      runs: '',
+      wickets: ''
+    }
+  ])
+  }
   return (
     <div>
       <h1>Add Match</h1>
@@ -227,39 +241,65 @@ function AddMatch() {
       />
       <h2>🎯 Bowling Scorecard</h2>
 
-<input
-  type="text"
-  placeholder="Bowler"
-  value={bowler1}
-  onChange={(e) => setBowler1(e.target.value)}
-/>
+ {bowling.map((bowler, index) => (
+  <div key={index}>
+    <input
+      type="text"
+      placeholder="Bowler"
+      value={bowler.player}
+      onChange={(e) => {
+        const updated = [...bowling]
+        updated[index].player = e.target.value
+        setBowling(updated)
+      }}
+    />
 
-<input
-  type="number"
-  placeholder="Overs"
-  value={overs1}
-  onChange={(e) => setOvers1(e.target.value)}
-/>
+    <input
+      type="number"
+      placeholder="Overs"
+      value={bowler.overs}
+      onChange={(e) => {
+        const updated = [...bowling]
+        updated[index].overs = e.target.value
+        setBowling(updated)
+      }}
+    />
 
-<input
-  type="number"
-  placeholder="Runs"
-  value={runsGiven1}
-  onChange={(e) => setRunsGiven1(e.target.value)}
-/>
+    <input
+      type="number"
+      placeholder="Runs"
+      value={bowler.runs}
+      onChange={(e) => {
+        const updated = [...bowling]
+        updated[index].runs = e.target.value
+        setBowling(updated)
+      }}
+    />
 
-<input
-  type="number"
-  placeholder="Wickets"
-  value={wickets1}
-  onChange={(e) => setWickets1(e.target.value)}
-/>
+    <input
+      type="number"
+      placeholder="Wickets"
+      value={bowler.wickets}
+      onChange={(e) => {
+        const updated = [...bowling]
+        updated[index].wickets = e.target.value
+        setBowling(updated)
+      }}
+    />
 
-      <br />
-      <br />
+    <br />
+    <br />
+  </div>
+ ))}
 
-      <button
-  onClick={() => {
+ <button onClick={addBowler}>
+  + Add Bowler
+ </button>
+
+ <br />
+ <br />
+
+ <button onClick={() => {
     const newMatch = {
   id: Date.now(),
   team1,
@@ -276,16 +316,14 @@ function AddMatch() {
   runs: Number(player.runs),
   balls: Number(player.balls)
  })),
-    bowling: [
-    {
-      player: bowler1,
-      overs: Number(overs1),
-      runs: Number(runsGiven1),
-      wickets: Number(wickets1)
-    }
-  ],
+    bowling: bowling.map((player) => ({
+  player: player.player,
+  overs: Number(player.overs),
+  runs: Number(player.runs),
+  wickets: Number(player.wickets)
+  })),
   result: `${winner} won`
-}
+ }
 
     const oldMatches =
       JSON.parse(localStorage.getItem("matches")) || []
@@ -318,15 +356,18 @@ function AddMatch() {
     runs: '',
     balls: ''
   }
+])
+    setBowling([
+  {
+    player: '',
+    overs: '',
+    runs: '',
+    wickets: ''
+  }
  ])
-    setBowler1('')
-    setOvers1('')
-    setRunsGiven1('')
-    setWickets1('')
-  }}
->
+  }}>
   Save Match
-</button>
+ </button>
     </div>
   )
 }
