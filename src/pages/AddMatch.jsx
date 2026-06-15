@@ -11,67 +11,80 @@ function AddMatch() {
   const [electedTo, setElectedTo] = useState('')
   const [winner, setWinner] = useState('')
   const [manOfTheMatch, setManOfTheMatch] = useState('')
-  const [batsman1, setBatsman1] = useState('')
-  const [runs1, setRuns1] = useState('')
-  const [balls1, setBalls1] = useState('')
-
-  const [batsman2, setBatsman2] = useState('')
-  const [runs2, setRuns2] = useState('')
-  const [balls2, setBalls2] = useState('')
+  const [batting, setBatting] = useState([
+  {
+    player: '',
+    runs: '',
+    balls: ''
+  }
+ ])
+  const addBatsman = () => {
+  setBatting([
+    ...batting,
+    {
+      player: '',
+      runs: '',
+      balls: ''
+    }
+  ])
+ }
   const [bowler1, setBowler1] = useState('')
   const [overs1, setOvers1] = useState('')
   const [runsGiven1, setRunsGiven1] = useState('')
   const [wickets1, setWickets1] = useState('')
-
+  
   return (
     <div>
       <h1>Add Match</h1>
 
-      <h2>Batting Scorecard</h2>
+      <h2>🏏 Batting Scorecard</h2>
 
-     <input
+ {batting.map((batsman, index) => (
+  <div key={index}>
+    <input
       type="text"
-      placeholder="Batsman 1"
-      value={batsman1}
-      onChange={(e) => setBatsman1(e.target.value)}
-      />
+      placeholder="Player"
+      value={batsman.player}
+      onChange={(e) => {
+        const updated = [...batting]
+        updated[index].player = e.target.value
+        setBatting(updated)
+      }}
+    />
 
-     <input
-     type="number"
-     placeholder="Runs"
-      value={runs1}
-      onChange={(e) => setRuns1(e.target.value)}
-     />
+    <input
+      type="number"
+      placeholder="Runs"
+      value={batsman.runs}
+      onChange={(e) => {
+        const updated = [...batting]
+        updated[index].runs = e.target.value
+        setBatting(updated)
+      }}
+    />
 
-     <input
+    <input
       type="number"
       placeholder="Balls"
-      value={balls1}
-      onChange={(e) => setBalls1(e.target.value)}
-      />
+      value={batsman.balls}
+      onChange={(e) => {
+        const updated = [...batting]
+        updated[index].balls = e.target.value
+        setBatting(updated)
+      }}
+    />
 
-<br /><br />
+    <br />
+    <br />
+  </div>
+ ))}
 
-<input
-  type="text"
-  placeholder="Batsman 2"
-  value={batsman2}
-  onChange={(e) => setBatsman2(e.target.value)}
-/>
+ <button onClick={addBatsman}>
+  + Add Batsman
+ </button>
 
-<input
-  type="number"
-  placeholder="Runs"
-  value={runs2}
-  onChange={(e) => setRuns2(e.target.value)}
-/>
-
-<input
-  type="number"
-  placeholder="Balls"
-  value={balls2}
-  onChange={(e) => setBalls2(e.target.value)}
-/>
+ <br />
+ <br />
 
       <h3>Team 1</h3>
 
@@ -258,18 +271,11 @@ function AddMatch() {
   winner,
   manOfTheMatch,
 
-  batting: [
-    {
-      player: batsman1,
-      runs: Number(runs1),
-      balls: Number(balls1)
-    },
-    {
-      player: batsman2,
-      runs: Number(runs2),
-      balls: Number(balls2)
-    }
-  ],
+  batting: batting.map((player) => ({
+  player: player.player,
+  runs: Number(player.runs),
+  balls: Number(player.balls)
+ })),
     bowling: [
     {
       player: bowler1,
@@ -306,12 +312,13 @@ function AddMatch() {
     setElectedTo('')
     setWinner('')
     setManOfTheMatch('')
-    setBatsman1('')
-    setRuns1('')
-    setBalls1('')
-    setBatsman2('')
-    setRuns2('')
-    setBalls2('')
+    setBatting([
+  {
+    player: '',
+    runs: '',
+    balls: ''
+  }
+ ])
     setBowler1('')
     setOvers1('')
     setRunsGiven1('')
