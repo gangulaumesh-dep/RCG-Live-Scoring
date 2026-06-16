@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import teams from '../data/teams'
 import { updatePlayerStats } from '../utils/updatePlayerStats'
+import players from '../data/players' 
 
 function AddMatch() {
   const [team1, setTeam1] = useState('')
@@ -11,12 +12,16 @@ function AddMatch() {
   const [electedTo, setElectedTo] = useState('')
   const [winner, setWinner] = useState('')
   const [manOfTheMatch, setManOfTheMatch] = useState('')
+  const [battingTeam, setBattingTeam] = useState('')
+  const [bowlingTeam, setBowlingTeam] = useState('')
   const [batting, setBatting] = useState([
   {
-    player: '',
-    runs: '',
-    balls: ''
-  }
+  player: '',
+  runs: '',
+  balls: '',
+  fours: '',
+  sixes: ''
+}
  ])
   const addBatsman = () => {
   setBatting([
@@ -24,17 +29,19 @@ function AddMatch() {
     {
       player: '',
       runs: '',
-      balls: ''
+      balls: '',
+      fours: '',
+      sixes: ''
     }
   ])
  }
   const [bowling, setBowling] = useState([
   {
-    player: '',
-    overs: '',
-    runs: '',
-    wickets: ''
-  }
+      player: '',
+      overs: '',
+      runs: '',
+      wickets: ''
+    }
  ])
    const addBowler = () => {
   setBowling([
@@ -47,24 +54,102 @@ function AddMatch() {
     }
   ])
   }
+  const [batting2, setBatting2] = useState([
+  {
+  player: '',
+  runs: '',
+  balls: '',
+  fours: '',
+  sixes: ''
+ }
+])
+
+const [bowling2, setBowling2] = useState([
+  {
+    player: '',
+    overs: '',
+    runs: '',
+    wickets: ''
+  }
+])
+
+const [battingTeam2, setBattingTeam2] = useState('')
+const [bowlingTeam2, setBowlingTeam2] = useState('')
+const addBatsman2 = () => {
+  setBatting2([
+    ...batting2,
+    {
+  player: '',
+  runs: '',
+  balls: '',
+  fours: '',
+  sixes: ''
+ }
+  ])
+}
+
+const addBowler2 = () => {
+  setBowling2([
+    ...bowling2,
+    {
+      player: '',
+      overs: '',
+      runs: '',
+      wickets: ''
+    }
+  ])
+}
   return (
     <div>
       <h1>Add Match</h1>
+      <h3>Batting Team</h3>
+
+<select
+  value={battingTeam}
+  onChange={(e) => setBattingTeam(e.target.value)}
+>
+  <option value="">Select Team</option>
+
+  {teams.map((team) => (
+    <option
+      key={team.id}
+      value={team.shortName}
+    >
+      {team.shortName}
+    </option>
+  ))}
+</select>
 
       <h2>🏏 Batting Scorecard</h2>
 
  {batting.map((batsman, index) => (
   <div key={index}>
-    <input
-      type="text"
-      placeholder="Player"
-      value={batsman.player}
-      onChange={(e) => {
-        const updated = [...batting]
-        updated[index].player = e.target.value
-        setBatting(updated)
-      }}
-    />
+   <select
+  value={batsman.player}
+  onChange={(e) => {
+    const updated = [...batting]
+    updated[index].player = e.target.value
+    setBatting(updated)
+  }}
+>
+  <option value="">
+    Select Player
+  </option>
+
+  {players
+    .filter(
+      (player) =>
+        player.team === battingTeam
+    )
+    .map((player) => (
+      <option
+        key={player.id}
+        value={player.name}
+      >
+        {player.name}
+      </option>
+    ))}
+</select>
 
     <input
       type="number"
@@ -87,11 +172,32 @@ function AddMatch() {
         setBatting(updated)
       }}
     />
+        <input
+  type="number"
+  placeholder="4s"
+  value={batsman.fours}
+  onChange={(e) => {
+    const updated = [...batting]
+    updated[index].fours = e.target.value
+    setBatting(updated)
+  }}
+/>
 
+<input
+  type="number"
+  placeholder="6s"
+  value={batsman.sixes}
+  onChange={(e) => {
+    const updated = [...batting]
+    updated[index].sixes = e.target.value
+    setBatting(updated)
+  }}
+/>
     <br />
     <br />
   </div>
  ))}
+        
 
  <button onClick={addBatsman}>
   + Add Batsman
@@ -239,20 +345,53 @@ function AddMatch() {
           setManOfTheMatch(e.target.value)
         }
       />
+      <h3>Bowling Team</h3>
+
+<select
+  value={bowlingTeam}
+  onChange={(e) => setBowlingTeam(e.target.value)}
+>
+  <option value="">Select Team</option>
+
+  {teams.map((team) => (
+    <option
+      key={team.id}
+      value={team.shortName}
+    >
+      {team.shortName}
+    </option>
+  ))}
+</select>
       <h2>🎯 Bowling Scorecard</h2>
 
  {bowling.map((bowler, index) => (
   <div key={index}>
-    <input
-      type="text"
-      placeholder="Bowler"
-      value={bowler.player}
-      onChange={(e) => {
-        const updated = [...bowling]
-        updated[index].player = e.target.value
-        setBowling(updated)
-      }}
-    />
+    <select
+  value={bowler.player}
+  onChange={(e) => {
+    const updated = [...bowling]
+    updated[index].player = e.target.value
+    setBowling(updated)
+  }}
+>
+  <option value="">
+    Select Player
+  </option>
+
+  {players
+    .filter(
+      (player) =>
+        player.team === bowlingTeam
+    )
+    .map((player) => (
+      <option
+        key={player.id}
+        value={player.name}
+      >
+        {player.name}
+      </option>
+    ))}
+</select>
 
     <input
       type="number"
@@ -291,6 +430,8 @@ function AddMatch() {
     <br />
   </div>
  ))}
+    <hr />
+
 
  <button onClick={addBowler}>
   + Add Bowler
@@ -298,6 +439,203 @@ function AddMatch() {
 
  <br />
  <br />
+   <h1>🏏 Innings 2</h1>
+   <h3>Batting Team</h3>
+
+<select
+  value={battingTeam2}
+  onChange={(e) => setBattingTeam2(e.target.value)}
+>
+  <option value="">Select Team</option>
+
+  {teams.map((team) => (
+    <option
+      key={team.id}
+      value={team.shortName}
+    >
+      {team.shortName}
+    </option>
+  ))}
+</select>
+
+      <h2>🏏 Batting Scorecard</h2>
+
+ {batting2.map((batsman, index) => (
+  <div key={index}>
+   <select
+  value={batsman.player}
+  onChange={(e) => {
+    const updated = [...batting2]
+    updated[index].player = e.target.value
+    setBatting2(updated)
+  }}
+>
+  <option value="">
+    Select Player
+  </option>
+
+  {players
+    .filter(
+      (player) =>
+        player.team === battingTeam2
+    )
+    .map((player) => (
+      <option
+        key={player.id}
+        value={player.name}
+      >
+        {player.name}
+      </option>
+    ))}
+</select>
+
+    <input
+      type="number"
+      placeholder="Runs"
+      value={batsman.runs}
+      onChange={(e) => {
+        const updated = [...batting2]
+        updated[index].runs = e.target.value
+        setBatting2(updated)
+      }}
+    />
+
+    <input
+      type="number"
+      placeholder="Balls"
+      value={batsman.balls}
+      onChange={(e) => {
+        const updated = [...batting2]
+        updated[index].balls = e.target.value
+        setBatting2(updated)
+      }}
+    />
+      <input
+  type="number"
+  placeholder="4s"
+  value={batsman.fours}
+  onChange={(e) => {
+    const updated = [...batting2]
+    updated[index].fours = e.target.value
+    setBatting2(updated)
+  }}
+/>
+
+<input
+  type="number"
+  placeholder="6s"
+  value={batsman.sixes}
+  onChange={(e) => {
+    const updated = [...batting2]
+    updated[index].sixes = e.target.value
+    setBatting2(updated)
+  }}
+/>
+    <br />
+    <br />
+  </div>
+ ))}
+       
+ <button onClick={addBatsman2}>
+  + Add Batsman
+ </button>
+
+ <br />
+ <br />
+      <h3>Bowling Team</h3>
+
+<select
+  value={bowlingTeam2}
+  onChange={(e) => setBowlingTeam2(e.target.value)}
+>
+  <option value="">Select Team</option>
+
+  {teams.map((team) => (
+    <option
+      key={team.id}
+      value={team.shortName}
+    >
+      {team.shortName}
+    </option>
+  ))}
+</select>
+      <h2>🎯 Bowling Scorecard</h2>
+
+ {bowling2.map((bowler, index) => (
+  <div key={index}>
+    <select
+  value={bowler.player}
+  onChange={(e) => {
+    const updated = [...bowling2]
+    updated[index].player = e.target.value
+    setBowling2(updated)
+  }}
+>
+  <option value="">
+    Select Player
+  </option>
+
+  {players
+    .filter(
+      (player) =>
+        player.team === bowlingTeam2
+    )
+    .map((player) => (
+      <option
+        key={player.id}
+        value={player.name}
+      >
+        {player.name}
+      </option>
+    ))}
+</select>
+
+    <input
+      type="number"
+      placeholder="Overs"
+      value={bowler.overs}
+      onChange={(e) => {
+        const updated = [...bowling2]
+        updated[index].overs = e.target.value
+        setBowling2(updated)
+      }}
+    />
+
+    <input
+      type="number"
+      placeholder="Runs"
+      value={bowler.runs}
+      onChange={(e) => {
+        const updated = [...bowling2]
+        updated[index].runs = e.target.value
+        setBowling2(updated)
+      }}
+    />
+
+    <input
+      type="number"
+      placeholder="Wickets"
+      value={bowler.wickets}
+      onChange={(e) => {
+        const updated = [...bowling2]
+        updated[index].wickets = e.target.value
+        setBowling2(updated)
+      }}
+    />
+
+    <br />
+    <br />
+  </div>
+ ))}
+    <hr />
+
+
+ <button onClick={addBowler2}>
+  + Add Bowler
+ </button>
+
+  <br />
+  <br />
 
  <button onClick={() => {
     const newMatch = {
@@ -314,14 +652,30 @@ function AddMatch() {
   batting: batting.map((player) => ({
   player: player.player,
   runs: Number(player.runs),
-  balls: Number(player.balls)
- })),
+  balls: Number(player.balls),
+  fours: Number(player.fours),
+  sixes: Number(player.sixes)
+})),
     bowling: bowling.map((player) => ({
   player: player.player,
   overs: Number(player.overs),
   runs: Number(player.runs),
   wickets: Number(player.wickets)
   })),
+      batting2: batting2.map((player) => ({
+    player: player.player,
+    runs: Number(player.runs),
+    balls: Number(player.balls),
+    fours: Number(player.fours),
+    sixes: Number(player.sixes)
+})),
+
+bowling2: bowling2.map((player) => ({
+  player: player.player,
+  overs: Number(player.overs),
+  runs: Number(player.runs),
+  wickets: Number(player.wickets)
+})),
   result: `${winner} won`
  }
 
@@ -354,10 +708,29 @@ function AddMatch() {
   {
     player: '',
     runs: '',
-    balls: ''
+    balls: '',
+    fours: '',
+    sixes: ''
   }
 ])
     setBowling([
+  {
+    player: '',
+    overs: '',
+    runs: '',
+    wickets: ''
+  }
+ ])
+ setBatting2([
+  {
+    player: '',
+    runs: '',
+    balls: '',
+    fours: '',
+    sixes: ''
+  }
+])
+    setBowling2([
   {
     player: '',
     overs: '',

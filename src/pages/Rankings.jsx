@@ -1,46 +1,46 @@
 function Rankings() {
-  const orangeCap = [
-    { name: "Virat Kohli", runs: 450 },
-    { name: "Rohit Sharma", runs: 390 },
-    { name: "Ruturaj", runs: 365 },
-    { name: "S. Iyer", runs: 340 },
-    { name: "Hardik", runs: 320 },
-  ]
+  const stats =
+    JSON.parse(
+      localStorage.getItem('playerStats')
+    ) || {}
 
-  const purpleCap = [
-    { name: "Bumrah", wickets: 18 },
-    { name: "Shami", wickets: 15 },
-    { name: "Rashid Khan", wickets: 14 },
-    { name: "Rabada", wickets: 13 },
-    { name: "Kuldeep Yadav", wickets: 12 },
-  ]
+  const players = Object.entries(stats).map(
+    ([name, data]) => ({
+      name,
+      ...data
+    })
+  )
+
+  const topBatsmen = [...players]
+    .sort((a, b) => b.runs - a.runs)
+    .slice(0, 10)
+
+  const topBowlers = [...players]
+    .sort((a, b) => b.wickets - a.wickets)
+    .slice(0, 10)
 
   return (
     <div>
       <h1>Player Rankings</h1>
 
-      <h2>🟠 Orange Cap</h2>
+      <h2>🏏 Orange Cap</h2>
 
-      {orangeCap.map((player, index) => (
-        <div key={index} className="record-card">
-          <h3>
-            {index + 1}. {player.name}
-          </h3>
-
-          <p>{player.runs} Runs</p>
-        </div>
+      {topBatsmen.map((player, index) => (
+        <p key={player.name}>
+          {index + 1}. {player.name} -{' '}
+          {player.runs} Runs
+        </p>
       ))}
 
-      <h2>🟣 Purple Cap</h2>
+      <hr />
 
-      {purpleCap.map((player, index) => (
-        <div key={index} className="record-card">
-          <h3>
-            {index + 1}. {player.name}
-          </h3>
+      <h2>🎯 Purple Cap</h2>
 
-          <p>{player.wickets} Wickets</p>
-        </div>
+      {topBowlers.map((player, index) => (
+        <p key={player.name}>
+          {index + 1}. {player.name} -{' '}
+          {player.wickets} Wickets
+        </p>
       ))}
     </div>
   )
