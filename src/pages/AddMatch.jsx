@@ -99,6 +99,8 @@ const addBowler2 = () => {
     }
   ])
 }
+const [oversTeam1, setOversTeam1] = useState('')
+const [oversTeam2, setOversTeam2] = useState('')
   return (
     <div>
       <h1>Add Match</h1>
@@ -260,7 +262,16 @@ const addBowler2 = () => {
           setScore1(e.target.value)
         }
       />
+       <h3>Overs 1</h3>
 
+<input
+  type="text"
+  placeholder="20"
+  value={oversTeam1}
+  onChange={(e) =>
+    setOversTeam1(e.target.value)
+  }
+/>
       <h3>Score 2</h3>
 
       <input
@@ -271,7 +282,16 @@ const addBowler2 = () => {
           setScore2(e.target.value)
         }
       />
+         <h3>Overs 2</h3>
 
+<input
+  type="text"
+  placeholder="19.3"
+  value={oversTeam2}
+  onChange={(e) =>
+    setOversTeam2(e.target.value)
+  }
+/>
       <h3>Toss Winner</h3>
 
       <select
@@ -636,7 +656,23 @@ const addBowler2 = () => {
 
   <br />
   <br />
+    <input
+  type="text"
+  placeholder="Overs 1"
+  value={oversTeam1}
+  onChange={(e) =>
+    setOversTeam1(e.target.value)
+  }
+/>
 
+<input
+  type="text"
+  placeholder="Overs 2"
+  value={oversTeam2}
+  onChange={(e) =>
+    setOversTeam2(e.target.value)
+  }
+/>
  <button onClick={() => {
     const newMatch = {
   id: Date.now(),
@@ -644,6 +680,8 @@ const addBowler2 = () => {
   team2,
   score1,
   score2,
+  oversTeam1,
+  oversTeam2,
   tossWinner,
   electedTo,
   winner,
@@ -700,6 +738,8 @@ bowling2: bowling2.map((player) => ({
     setTeam2('')
     setScore1('')
     setScore2('')
+    setOversTeam1('')
+setOversTeam2('')
     setTossWinner('')
     setElectedTo('')
     setWinner('')
