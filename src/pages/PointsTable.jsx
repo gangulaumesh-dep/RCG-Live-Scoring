@@ -1,7 +1,60 @@
 import teams from '../data/teams'
 
 function PointsTable() {
-  const sortedTeams = [...teams].sort(
+  let matches = []
+
+try {
+  matches =
+    JSON.parse(localStorage.getItem('matches')) || []
+} catch {
+  matches = []
+}
+
+  const table = teams.map((team) => ({
+    ...team,
+    matches: 0,
+    wins: 0,
+    losses: 0,
+    points: 0
+  }))
+
+  matches.forEach((match) => {
+  console.log(
+    "MATCH:",
+    match.team1,
+    match.team2,
+    match.winner
+  )
+
+  const team1 = table.find(
+    (t) => t.shortName === match.team1
+  )
+
+  const team2 = table.find(
+    (t) => t.shortName === match.team2
+  )
+
+  console.log("FOUND:", team1, team2)
+
+  if (!team1 || !team2) return
+
+  team1.matches += 1
+  team2.matches += 1
+
+  if (match.winner === team1.shortName) {
+    team1.wins += 1
+    team1.points += 2
+    team2.losses += 1
+  }
+
+  if (match.winner === team2.shortName) {
+    team2.wins += 1
+    team2.points += 2
+    team1.losses += 1
+  }
+})
+
+  const sortedTeams = table.sort(
     (a, b) => b.points - a.points
   )
 
@@ -18,7 +71,6 @@ function PointsTable() {
             <th>Wins</th>
             <th>Losses</th>
             <th>Points</th>
-            <th>NRR</th>
           </tr>
         </thead>
 
@@ -31,7 +83,6 @@ function PointsTable() {
               <td>{team.wins}</td>
               <td>{team.losses}</td>
               <td>{team.points}</td>
-              <td>{team.nrr}</td>
             </tr>
           ))}
         </tbody>
