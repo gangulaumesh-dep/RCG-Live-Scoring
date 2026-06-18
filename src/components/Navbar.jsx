@@ -13,6 +13,10 @@ function Navbar() {
         <li><Link to="/pointstable">Points Table</Link></li>
         <li><Link to="/rankings">Rankings</Link></li>
         <li><Link to="/records">Records</Link></li>
+        <li><Link to="/history">History</Link></li>
+        <Link to="/halloffame">
+  Hall Of Fame
+</Link>
         <Link to="/playoffs">
   Playoffs
  </Link>

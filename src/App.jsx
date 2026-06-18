@@ -13,6 +13,8 @@ import PointsTable from './pages/PointsTable'
 import Rankings from './pages/Rankings'
 import Records from './pages/Records'
 import Playoffs from './pages/Playoffs'
+import History from './pages/History'
+import HallOfFame from './pages/HallOfFame'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -34,6 +36,11 @@ function App() {
         <Route path="/rankings" element={<Rankings />} />
         <Route path="/records" element={<Records />} />
         <Route path="/playoffs"element={<Playoffs />}/>
+        <Route path="/history" element={<History />} />
+        <Route
+  path="/halloffame"
+  element={<HallOfFame />}
+/>
       </Routes>
     </BrowserRouter>
   )
