@@ -19,33 +19,39 @@ function Players() {
 
   return (
     <div className="players-page">
-      <h1>Players</h1>
+      <h1>🏏 RCG Players</h1>
 
-      <input
-        type="text"
-        placeholder="Search Player..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+<div className="player-filters">
+  <input
+    type="text"
+    placeholder="🔍 Search Player..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
 
-      <select
-        value={teamFilter}
-        onChange={(e) => setTeamFilter(e.target.value)}
-      >
-        <option value="">All Teams</option>
-        <option value="RES">RES</option>
-        <option value="RKS">RKS</option>
-        <option value="SLS">SLS</option>
-        <option value="MRS">MRS</option>
-        <option value="LMS">LMS</option>
-        <option value="HRS">HRS</option>
-        <option value="RFS">RFS</option>
-        <option value="AWS">AWS</option>
-        <option value="GCP">GCP</option>
-        <option value="TDR">TDR</option>
-      </select>
+  <select
+    value={teamFilter}
+    onChange={(e) =>
+      setTeamFilter(e.target.value)
+    }
+  >
+    <option value="">All Teams</option>
+    <option value="RES">RES</option>
+    <option value="RKS">RKS</option>
+    <option value="SLS">SLS</option>
+    <option value="MRS">MRS</option>
+    <option value="LMS">LMS</option>
+    <option value="HRS">HRS</option>
+    <option value="RFS">RFS</option>
+    <option value="AWS">AWS</option>
+    <option value="GCP">GCP</option>
+    <option value="TDR">TDR</option>
+  </select>
+</div>
 
-      <h3>Total Players: {filteredPlayers.length}</h3>
+<h3>
+  👥 Total Players: {filteredPlayers.length}
+</h3>
 
       <div className="players">
         {filteredPlayers.map((player) => (

@@ -7,34 +7,47 @@ function TeamCard({ team }) {
   ).length
 
   return (
-    <Link
-      to={`/teams/${team.shortName}`}
-      style={{
-        textDecoration: 'none',
-        color: 'inherit'
-      }}
-    >
-      <div className="team-card">
-        <h2>
-          {team.name} ({team.shortName})
-        </h2>
+  <Link
+    to={`/teams/${team.shortName}`}
+    style={{
+      textDecoration: 'none',
+      color: 'inherit'
+    }}
+  >
+    <div className="team-card">
+      <h2>🏏 {team.shortName}</h2>
 
-        <p>
-          <strong>Captain:</strong> {team.captain}
-        </p>
+      <h3>{team.name}</h3>
 
-        <p>
-          <strong>Squad:</strong> {squadSize} Players
-        </p>
+      <p>
+        👑 <strong>Captain:</strong>{" "}
+        {team.captain}
+      </p>
 
-        <p>Matches: {team.matches}</p>
-        <p>Wins: {team.wins}</p>
-        <p>Losses: {team.losses}</p>
-        <p>Points: {team.points}</p>
-        <p>NRR: {team.nrr}</p>
+      <p>
+        👥 <strong>Squad:</strong>{" "}
+        {squadSize} Players
+      </p>
+
+      <hr />
+
+      <div className="team-stats">
+        <p>🏏 M: {team.matches}</p>
+        <p>✅ W: {team.wins}</p>
+        <p>❌ L: {team.losses}</p>
+        <p>🏆 Pts: {team.points}</p>
       </div>
-    </Link>
-  )
-}
 
+      <p>
+        📈 <strong>NRR:</strong>{" "}
+        {team.nrr}
+      </p>
+
+      <button className="team-btn">
+        View Team →
+      </button>
+    </div>
+  </Link>
+)
+}
 export default TeamCard

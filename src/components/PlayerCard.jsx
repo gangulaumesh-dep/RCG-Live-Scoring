@@ -11,25 +11,41 @@ function PlayerCard({ player }) {
   }
 
   return (
-    <Link
-      to={`/players/${player.id}`}
-      style={{
-        textDecoration: 'none',
-        color: 'inherit'
-      }}
-    >
-      <div className="player-card">
-        <h2>{player.name}</h2>
+  <Link
+    to={`/players/${player.id}`}
+    style={{
+      textDecoration: 'none',
+      color: 'inherit'
+    }}
+  >
+    <div className="player-card">
+      <h2>👤 {player.name}</h2>
 
-        <p>Team: {player.team}</p>
-        <p>Role: {player.role}</p>
+      <p>
+        🏏 <strong>Team:</strong>{" "}
+        {player.team}
+      </p>
 
-        <p>Matches: {stats.matches}</p>
-        <p>Runs: {stats.runs}</p>
-        <p>Wickets: {stats.wickets}</p>
+      <span
+        className={`role-badge ${player.role}`}
+      >
+        {player.role}
+      </span>
+
+      <hr />
+
+      <div className="player-stats">
+        <p>🏏 M: {stats.matches}</p>
+        <p>🏃 R: {stats.runs}</p>
+        <p>🎯 W: {stats.wickets}</p>
       </div>
-    </Link>
-  )
+
+      <button className="player-btn">
+        View Profile →
+      </button>
+    </div>
+  </Link>
+)
 }
 
 export default PlayerCard
