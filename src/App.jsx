@@ -12,7 +12,7 @@ import MatchDetails from './pages/MatchDetails'
 import PointsTable from './pages/PointsTable'
 import Rankings from './pages/Rankings'
 import Records from './pages/Records'
-
+import Playoffs from './pages/Playoffs'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
         <Route path="/pointstable" element={<PointsTable />} />
         <Route path="/rankings" element={<Rankings />} />
         <Route path="/records" element={<Records />} />
+        <Route path="/playoffs"element={<Playoffs />}/>
       </Routes>
     </BrowserRouter>
   )

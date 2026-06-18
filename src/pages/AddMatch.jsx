@@ -739,7 +739,7 @@ bowling2: bowling2.map((player) => ({
     setScore1('')
     setScore2('')
     setOversTeam1('')
-setOversTeam2('')
+    setOversTeam2('')
     setTossWinner('')
     setElectedTo('')
     setWinner('')
