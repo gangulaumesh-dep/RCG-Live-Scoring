@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import teams from '../data/teams'
 
 function Playoffs() {
@@ -66,6 +66,17 @@ const [champion, setChampion] = useState('')
         ? winnerQ4
         : winnerQ2)
     : ''
+    useEffect(() => {
+  if (champion) {
+    localStorage.setItem(
+      'seasonResult',
+      JSON.stringify({
+        champion,
+        runnerUp
+      })
+    )
+  }
+}, [champion, runnerUp])
   return (
 
     <div>
@@ -253,6 +264,7 @@ const [champion, setChampion] = useState('')
     </select>
   </>
 )}
+
 {champion && (
   <>
     <hr />
@@ -269,4 +281,5 @@ const [champion, setChampion] = useState('')
     </div>
   )
 }
+
 export default Playoffs

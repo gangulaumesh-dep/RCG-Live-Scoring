@@ -18,6 +18,12 @@ function Navbar() {
         <li><Link to="/playoffs">Playoffs</Link></li>
         <li><Link to="/history">History</Link></li>
         <li><Link to="/halloffame">Hall Of Fame</Link></li>
+        <li><Link to="/seasonmanagement">Season Management</Link></li>
+        <li>
+  <Link to="/archive">
+    Match Archive
+  </Link>
+</li>
       </ul>
     </nav>
   )

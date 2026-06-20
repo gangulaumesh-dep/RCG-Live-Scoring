@@ -1,6 +1,10 @@
-import teams from '../data/teams'
 import TeamCard from '../components/TeamCard'
+import teamsData from '../data/teams'
 
+const teams =
+  JSON.parse(
+    localStorage.getItem('teams')
+  ) || teamsData
 function Teams() {
   return (
     <div className="teams-page">

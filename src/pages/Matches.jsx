@@ -1,33 +1,40 @@
 import { Link } from 'react-router-dom'
-import matches from '../data/matches'
 import MatchCard from '../components/MatchCard'
 
 function Matches() {
-  const savedMatches =
-    JSON.parse(localStorage.getItem('matches')) || []
 
-  const allMatches = [
-    ...matches,
-    ...savedMatches
-  ]
+  const matches =
+    JSON.parse(
+      localStorage.getItem('matches')
+    ) || []
 
   return (
     <div className="matches">
+
       <h1>Matches</h1>
 
       <Link to="/add-match">
-        <button>Add Match</button>
+        <button>
+          Add Match
+        </button>
       </Link>
 
       <br />
       <br />
 
-      {allMatches.map((match) => (
-        <MatchCard
-          key={match.id}
-          match={match}
-        />
-      ))}
+      {matches.length === 0 ? (
+        <p>
+          No matches found.
+        </p>
+      ) : (
+        matches.map((match) => (
+          <MatchCard
+            key={match.id}
+            match={match}
+          />
+        ))
+      )}
+
     </div>
   )
 }

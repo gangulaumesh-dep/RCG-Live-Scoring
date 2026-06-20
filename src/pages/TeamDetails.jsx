@@ -1,10 +1,16 @@
 import { useParams } from 'react-router-dom'
 import teams from '../data/teams'
-import players from '../data/players'
+const players =
+  JSON.parse(
+    localStorage.getItem('players')
+  ) || playersData
 
 function TeamDetails() {
   const { shortName } = useParams()
-
+  const players =
+  JSON.parse(
+    localStorage.getItem('players')
+  ) || playersData
   const team = teams.find(
     (t) => t.shortName === shortName
   )
@@ -16,11 +22,18 @@ function TeamDetails() {
   const batsmen = squad.filter((p) => p.role === 'BAT')
   const wicketkeepers = squad.filter((p) => p.role === 'WK')
   const allRounders = squad.filter(
-    (p) => p.role === 'FAR' || p.role === 'SAR'
-  )
-  const bowlers = squad.filter(
-    (p) => p.role === 'FB' || p.role === 'SB'
-  )
+  (p) =>
+    p.role === 'AR' ||
+    p.role === 'FAR' ||
+    p.role === 'SAR'
+)
+
+const bowlers = squad.filter(
+  (p) =>
+    p.role === 'BOWL' ||
+    p.role === 'FB' ||
+    p.role === 'SB'
+)
 
   if (!team) {
     return <h2>Team Not Found</h2>

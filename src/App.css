@@ -603,3 +603,201 @@ option {
 .nav-links a {
   font-size: 14px;
 }
+
+.hof-page {
+  padding: 20px;
+}
+
+.hof-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 20px;
+}
+
+.hof-card {
+  background: linear-gradient(
+    135deg,
+    #1e293b,
+    #334155
+  );
+
+  border-left: 6px solid gold;
+
+  padding: 20px;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+
+  transition: .3s;
+}
+
+.hof-card:hover {
+  transform: translateY(-5px);
+}
+
+.hof-card h2 {
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.hof-card h3 {
+  color: white;
+}
+
+.champions-card {
+  margin-top: 30px;
+
+  background: #1e293b;
+
+  padding: 20px;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+}
+
+.champions-card h2 {
+  color: gold;
+}
+
+.champions-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(180px, 1fr));
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.history-page {
+  padding: 20px;
+}
+
+.season-card {
+  background: linear-gradient(
+    135deg,
+    #1e293b,
+    #334155
+  );
+
+  border-left: 6px solid gold;
+
+  padding: 20px;
+
+  margin-bottom: 20px;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+}
+
+.season-card h2 {
+  color: gold;
+  margin-bottom: 15px;
+}
+
+.season-card p {
+  margin: 8px 0;
+}
+
+.rankings-page {
+  padding: 20px;
+}
+
+.rankings-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(300px,1fr));
+  gap:15px;
+}
+.ranking-card {
+  background: linear-gradient(
+    135deg,
+    #1e293b,
+    #334155
+  );
+
+  border-left: 6px solid gold;
+
+  padding: 20px;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+}
+
+.ranking-card h2 {
+  color: gold;
+  margin-bottom: 15px;
+}
+
+.ranking-card p {
+  padding: 8px 0;
+  border-bottom:
+    1px solid rgba(255,255,255,.1);
+}
+
+.season-page {
+  padding: 20px;
+}
+
+.season-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(300px, 1fr));
+
+  gap: 20px;
+}
+
+.season-card {
+  background: linear-gradient(
+    135deg,
+    #1e293b,
+    #334155
+  );
+
+  padding: 20px;
+
+  border-radius: 15px;
+
+  border-left: 6px solid gold;
+
+  box-shadow:
+    0 6px 15px rgba(0,0,0,.3);
+}
+
+.season-card h2 {
+  color: gold;
+}
+
+.season-card button {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.table-container{
+  width:100%;
+  overflow-x:auto;
+}
+
+.table-container table{
+  min-width:700px;
+}
+
+ @media (max-width:768px){
+
+  .table-container table{
+    min-width:600px;
+  }
+
+}
+

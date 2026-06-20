@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import players from '../data/players'
+import playersData from '../data/players'
 import PlayerCard from '../components/PlayerCard'
 
 function Players() {
   const [search, setSearch] = useState('')
   const [teamFilter, setTeamFilter] = useState('')
-
+  const players =
+  JSON.parse(
+    localStorage.getItem('players')
+  ) || playersData
   const filteredPlayers = players.filter((player) => {
     const matchName = player.name
       .toLowerCase()

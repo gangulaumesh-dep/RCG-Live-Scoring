@@ -8,6 +8,7 @@ import TeamDetails from './pages/TeamDetails'
 import Players from './pages/Players'
 import PlayerDetails from './pages/PlayerDetails'
 import Matches from './pages/Matches'
+import Archive from './pages/Archive'
 import MatchDetails from './pages/MatchDetails'
 import PointsTable from './pages/PointsTable'
 import Rankings from './pages/Rankings'
@@ -15,6 +16,8 @@ import Records from './pages/Records'
 import Playoffs from './pages/Playoffs'
 import History from './pages/History'
 import HallOfFame from './pages/HallOfFame'
+import SeasonManagement from './pages/SeasonManagement'
+import SquadManagement from './pages/SquadManagement'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
@@ -27,7 +30,10 @@ function App() {
         <Route path="/add-match" element={<AddMatch />} />
         <Route path="/teams" element={<Teams />} />
         <Route path="/teams/:shortName" element={<TeamDetails />} />
-
+        <Route
+  path="/archive"
+  element={<Archive />}
+/>
         <Route path="/players" element={<Players />} />
         <Route path="/players/:id" element={<PlayerDetails />} />
         <Route path="/matches" element={<Matches />} />
@@ -37,6 +43,14 @@ function App() {
         <Route path="/records" element={<Records />} />
         <Route path="/playoffs"element={<Playoffs />}/>
         <Route path="/history" element={<History />} />
+        <Route
+  path="/seasonmanagement"
+  element={<SeasonManagement />}
+/>
+        <Route
+  path="/squadmanagement"
+  element={<SquadManagement />}
+/>
         <Route
   path="/halloffame"
   element={<HallOfFame />}

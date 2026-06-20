@@ -1,37 +1,135 @@
 function Records() {
   const matches =
-    JSON.parse(localStorage.getItem("matches")) || []
+    JSON.parse(
+      localStorage.getItem(
+        'allTimeMatches'
+      )
+    ) || []
 
   const stats =
-    JSON.parse(localStorage.getItem("playerStats")) || {}
+    JSON.parse(
+      localStorage.getItem(
+        'allTimePlayerStats'
+      )
+    ) || {}
 
-  // Highest Individual Score
-  let highestScore = {
-    player: "-",
-    runs: 0
+  const seasonStats =
+    JSON.parse(
+      localStorage.getItem(
+        'seasonPlayerStats'
+      )
+    ) || {}
+
+  const playersData =
+    JSON.parse(
+      localStorage.getItem('players')
+    ) || []
+
+  const getTeam = (name) => {
+    return (
+      playersData.find(
+        (p) => p.name === name
+      )?.team || '-'
+    )
   }
 
-  matches.forEach((match) => {
-    match.batting?.forEach((player) => {
-      if (player.runs > highestScore.runs) {
-        highestScore = {
-          player: player.player,
-          runs: player.runs
-        }
-      }
+  const players = Object.entries(stats).map(
+    ([name, data]) => ({
+      name,
+      ...data
     })
+  )
 
-    match.batting2?.forEach((player) => {
-      if (player.runs > highestScore.runs) {
-        highestScore = {
-          player: player.player,
-          runs: player.runs
-        }
-      }
-    })
-  })
+  const seasonPlayers =
+    Object.entries(seasonStats).map(
+      ([name, data]) => ({
+        name,
+        ...data
+      })
+    )
 
-  // Highest Team Score
+  // Current Season Records
+
+  const orangeCap = [...seasonPlayers]
+    .sort((a, b) => b.runs - a.runs)[0]
+
+  const purpleCap = [...seasonPlayers]
+    .sort(
+      (a, b) => b.wickets - a.wickets
+    )[0]
+
+  const seasonHighestScore =
+    [...seasonPlayers].sort(
+      (a, b) =>
+        (b.highestScore || 0) -
+        (a.highestScore || 0)
+    )[0]
+
+  const seasonBestBowling =
+    [...seasonPlayers].sort(
+      (a, b) =>
+        (b.bestWickets || 0) -
+        (a.bestWickets || 0)
+    )[0]
+
+  // All Time Records
+
+  const highestScore = [...players]
+    .sort(
+      (a, b) =>
+        (b.highestScore || 0) -
+        (a.highestScore || 0)
+    )[0]
+
+  const mostRuns = [...players]
+    .sort(
+      (a, b) =>
+        (b.runs || 0) -
+        (a.runs || 0)
+    )[0]
+
+  const mostWickets = [...players]
+    .sort(
+      (a, b) =>
+        (b.wickets || 0) -
+        (a.wickets || 0)
+    )[0]
+
+  const mostFifties = [...players]
+    .sort(
+      (a, b) =>
+        (b.fifties || 0) -
+        (a.fifties || 0)
+    )[0]
+
+  const mostHundreds = [...players]
+    .sort(
+      (a, b) =>
+        (b.hundreds || 0) -
+        (a.hundreds || 0)
+    )[0]
+
+  const bestBowling = [...players]
+    .sort(
+      (a, b) =>
+        (b.bestWickets || 0) -
+        (a.bestWickets || 0)
+    )[0]
+
+  const most3W = [...players]
+    .sort(
+      (a, b) =>
+        (b.threeWickets || 0) -
+        (a.threeWickets || 0)
+    )[0]
+
+  const most5W = [...players]
+    .sort(
+      (a, b) =>
+        (b.fiveWickets || 0) -
+        (a.fiveWickets || 0)
+    )[0]
+
   let highestTeamScore = 0
 
   matches.forEach((match) => {
@@ -48,57 +146,220 @@ function Records() {
     )
   })
 
-  // Most Runs
-  let mostRunsPlayer = "-"
-  let mostRuns = 0
-
-  Object.entries(stats).forEach(
-    ([name, data]) => {
-      if (data.runs > mostRuns) {
-        mostRuns = data.runs
-        mostRunsPlayer = name
-      }
-    }
-  )
-
-  // Most Wickets
-  let mostWicketsPlayer = "-"
-  let mostWickets = 0
-
-  Object.entries(stats).forEach(
-    ([name, data]) => {
-      if (data.wickets > mostWickets) {
-        mostWickets = data.wickets
-        mostWicketsPlayer = name
-      }
-    }
-  )
-
   return (
     <div>
-      <h1>🏆 Tournament Records</h1>
+      <h1>🏆 Records Center</h1>
+
+      <h2>
+        🟠 Current Season Records
+      </h2>
 
       <div className="record-card">
-        <h3>Highest Individual Score</h3>
-        <p>{highestScore.player}</p>
-        <p>{highestScore.runs}</p>
+        <h3>🟠 Orange Cap</h3>
+
+        <p>
+          {orangeCap?.name}
+          {' '}
+          ({getTeam(
+            orangeCap?.name
+          )})
+        </p>
+
+        <p>
+          {orangeCap?.runs} Runs
+        </p>
       </div>
 
       <div className="record-card">
-        <h3>Highest Team Score</h3>
-        <p>{highestTeamScore}</p>
+        <h3>🟣 Purple Cap</h3>
+
+        <p>
+          {purpleCap?.name}
+          {' '}
+          ({getTeam(
+            purpleCap?.name
+          )})
+        </p>
+
+        <p>
+          {purpleCap?.wickets}
+          {' '}
+          Wickets
+        </p>
       </div>
 
       <div className="record-card">
-        <h3>Most Runs</h3>
-        <p>{mostRunsPlayer}</p>
-        <p>{mostRuns}</p>
+        <h3>💯 Highest Score</h3>
+
+        <p>
+          {seasonHighestScore?.name}
+          {' '}
+          ({getTeam(
+            seasonHighestScore?.name
+          )})
+        </p>
+
+        <p>
+          {
+            seasonHighestScore?.highestScore
+          }
+        </p>
       </div>
 
       <div className="record-card">
-        <h3>Most Wickets</h3>
-        <p>{mostWicketsPlayer}</p>
-        <p>{mostWickets}</p>
+        <h3>🎯 Best Bowling</h3>
+
+        <p>
+          {seasonBestBowling?.name}
+          {' '}
+          ({getTeam(
+            seasonBestBowling?.name
+          )})
+        </p>
+
+        <p>
+          {
+            seasonBestBowling?.bestFigures
+          }
+        </p>
+      </div>
+
+      <hr />
+
+      <h2>🌍 All-Time Records</h2>
+
+      <div className="record-card">
+        <h3>🏏 Most Runs</h3>
+
+        <p>
+          {mostRuns?.name}
+          {' '}
+          ({getTeam(
+            mostRuns?.name
+          )})
+        </p>
+
+        <p>{mostRuns?.runs}</p>
+      </div>
+
+      <div className="record-card">
+        <h3>🎯 Most Wickets</h3>
+
+        <p>
+          {mostWickets?.name}
+          {' '}
+          ({getTeam(
+            mostWickets?.name
+          )})
+        </p>
+
+        <p>
+          {mostWickets?.wickets}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>💯 Highest Score Ever</h3>
+
+        <p>
+          {highestScore?.name}
+          {' '}
+          ({getTeam(
+            highestScore?.name
+          )})
+        </p>
+
+        <p>
+          {highestScore?.highestScore}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>🏏 Most 50s</h3>
+
+        <p>
+          {mostFifties?.name}
+          {' '}
+          ({getTeam(
+            mostFifties?.name
+          )})
+        </p>
+
+        <p>
+          {mostFifties?.fifties}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>💯 Most 100s</h3>
+
+        <p>
+          {mostHundreds?.name}
+          {' '}
+          ({getTeam(
+            mostHundreds?.name
+          )})
+        </p>
+
+        <p>
+          {mostHundreds?.hundreds}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>🎯 Best Bowling Ever</h3>
+
+        <p>
+          {bestBowling?.name}
+          {' '}
+          ({getTeam(
+            bestBowling?.name
+          )})
+        </p>
+
+        <p>
+          {bestBowling?.bestFigures}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>🔥 Most 3W Hauls</h3>
+
+        <p>
+          {most3W?.name}
+          {' '}
+          ({getTeam(
+            most3W?.name
+          )})
+        </p>
+
+        <p>
+          {most3W?.threeWickets}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>🔥 Most 5W Hauls</h3>
+
+        <p>
+          {most5W?.name}
+          {' '}
+          ({getTeam(
+            most5W?.name
+          )})
+        </p>
+
+        <p>
+          {most5W?.fiveWickets}
+        </p>
+      </div>
+
+      <div className="record-card">
+        <h3>🚀 Highest Team Score</h3>
+
+        <p>
+          {highestTeamScore}
+        </p>
       </div>
     </div>
   )

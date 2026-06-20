@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import matches from '../data/matches'
+
 
 function MatchDetails() {
   const { id } = useParams()

@@ -1,7 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import teams from '../data/teams'
 import { updatePlayerStats } from '../utils/updatePlayerStats'
-import players from '../data/players' 
+const players =
+  JSON.parse(
+    localStorage.getItem('players')
+  ) || playersData
 
 function AddMatch() {
   const [team1, setTeam1] = useState('')
@@ -101,6 +104,63 @@ const addBowler2 = () => {
 }
 const [oversTeam1, setOversTeam1] = useState('')
 const [oversTeam2, setOversTeam2] = useState('')
+const editMatch =
+  JSON.parse(
+    localStorage.getItem(
+      'editMatch'
+    )
+  )
+  useEffect(() => {
+
+  if (!editMatch) return
+
+  setTeam1(editMatch.team1 || '')
+  setTeam2(editMatch.team2 || '')
+
+  setScore1(editMatch.score1 || '')
+  setScore2(editMatch.score2 || '')
+
+  setOversTeam1(
+    editMatch.oversTeam1 || ''
+  )
+
+  setOversTeam2(
+    editMatch.oversTeam2 || ''
+  )
+
+  setTossWinner(
+    editMatch.tossWinner || ''
+  )
+
+  setElectedTo(
+    editMatch.electedTo || ''
+  )
+
+  setWinner(
+    editMatch.winner || ''
+  )
+
+  setManOfTheMatch(
+    editMatch.manOfTheMatch || ''
+  )
+
+  setBatting(
+    editMatch.batting || []
+  )
+
+  setBowling(
+    editMatch.bowling || []
+  )
+
+  setBatting2(
+    editMatch.batting2 || []
+  )
+
+  setBowling2(
+    editMatch.bowling2 || []
+  )
+
+}, [])
   return (
     <div>
       <h1>Add Match</h1>
@@ -436,15 +496,21 @@ const [oversTeam2, setOversTeam2] = useState('')
     />
 
     <input
-      type="number"
-      placeholder="Wickets"
-      value={bowler.wickets}
-      onChange={(e) => {
-        const updated = [...bowling]
-        updated[index].wickets = e.target.value
-        setBowling(updated)
-      }}
-    />
+  type="number"
+  min="0"
+  step="1"
+  placeholder="Wickets"
+  value={bowler.wickets}
+  onChange={(e) => {
+    const updated = [...bowling]
+    updated[index].wickets =
+      Math.max(
+        0,
+        Number(e.target.value)
+      )
+    setBowling(updated)
+  }}
+/>
 
     <br />
     <br />
@@ -633,16 +699,21 @@ const [oversTeam2, setOversTeam2] = useState('')
     />
 
     <input
-      type="number"
-      placeholder="Wickets"
-      value={bowler.wickets}
-      onChange={(e) => {
-        const updated = [...bowling2]
-        updated[index].wickets = e.target.value
-        setBowling2(updated)
-      }}
-    />
-
+  type="number"
+  min="0"
+  step="1"
+  placeholder="Wickets"
+  value={bowler.wickets}
+  onChange={(e) => {
+    const updated = [...bowling2]
+    updated[index].wickets =
+      Math.max(
+        0,
+        Number(e.target.value)
+      )
+    setBowling2(updated)
+  }}
+/>
     <br />
     <br />
   </div>
@@ -730,6 +801,24 @@ bowling2: bowling2.map((player) => ({
       "matches",
       JSON.stringify(updatedMatches)
     )
+    console.log("Reached allTimeMatches save")
+    const allTimeMatches =
+  JSON.parse(
+    localStorage.getItem(
+      'allTimeMatches'
+    )
+  ) || []
+ console.log("Saving to allTimeMatches")
+allTimeMatches.push(newMatch)
+
+localStorage.setItem(
+  'allTimeMatches',
+  JSON.stringify(allTimeMatches)
+)
+console.log(
+  "allTimeMatches saved",
+  allTimeMatches
+)
     updatePlayerStats(newMatch)
 
     alert("Match Saved!")
@@ -779,7 +868,11 @@ bowling2: bowling2.map((player) => ({
   }
  ])
   }}>
-  Save Match
+  {
+  editMatch
+    ? 'Update Match'
+    : 'Save Match'
+}
  </button>
     </div>
   )

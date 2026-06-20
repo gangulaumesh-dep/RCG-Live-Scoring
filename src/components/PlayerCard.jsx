@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom'
 
 function PlayerCard({ player }) {
   const savedStats =
-    JSON.parse(localStorage.getItem('playerStats')) || {}
+    JSON.parse(localStorage.getItem(
+  'allTimePlayerStats'
+)) || {}
 
   const stats = savedStats[player.name] || {
     matches: 0,
