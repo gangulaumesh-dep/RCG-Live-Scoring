@@ -1,18 +1,16 @@
 import { useParams } from 'react-router-dom'
 
-
 function MatchDetails() {
   const { id } = useParams()
 
-  const savedMatches =
-    JSON.parse(localStorage.getItem('matches')) || []
+  const matches =
+    JSON.parse(
+      localStorage.getItem(
+        'allTimeMatches'
+      )
+    ) || []
 
-  const allMatches = [
-    ...matches,
-    ...savedMatches
-  ]
-
-  const match = allMatches.find(
+  const match = matches.find(
     (m) => m.id === Number(id)
   )
 
@@ -42,41 +40,99 @@ function MatchDetails() {
         {match.team2}: {match.score2}
       </p>
 
-      <h2>{match.result}</h2>
+      <h2>
+        {match.result}
+      </h2>
 
       <h3>
         MOM: {match.manOfTheMatch}
       </h3>
-      <pre>
-  {JSON.stringify(match, null, 2)}
-</pre>
 
       <hr />
 
-      <h2>🏏 Batting Scorecard</h2>
+      <h2>
+        🏏 Innings 1 Batting
+      </h2>
 
-      {match.batting?.map((player, index) => (
-        <div key={index}>
-          <p>
-            {player.player} - {player.runs}
-            ({player.balls})
-          </p>
-        </div>
-      ))}
+      {match.batting?.map(
+        (player, index) => (
+          <div key={index}>
+            <p>
+              {player.player}
+              {' - '}
+              {player.runs}
+              (
+              {player.balls}
+              )
+            </p>
+          </div>
+        )
+      )}
+
       <hr />
 
-<h2>🎯 Bowling Scorecard</h2>
+      <h2>
+        🎯 Innings 1 Bowling
+      </h2>
 
-{match.bowling?.map((player, index) => (
-  <div key={index}>
-    <p>
-      {player.player} -
-      {player.overs} Overs,
-      {player.runs} Runs,
-      {player.wickets} Wickets
-    </p>
-  </div>
-))}
+      {match.bowling?.map(
+        (player, index) => (
+          <div key={index}>
+            <p>
+              {player.player}
+              {' - '}
+              {player.overs} Overs,
+              {' '}
+              {player.runs} Runs,
+              {' '}
+              {player.wickets} Wickets
+            </p>
+          </div>
+        )
+      )}
+
+      <hr />
+
+      <h2>
+        🏏 Innings 2 Batting
+      </h2>
+
+      {match.batting2?.map(
+        (player, index) => (
+          <div key={index}>
+            <p>
+              {player.player}
+              {' - '}
+              {player.runs}
+              (
+              {player.balls}
+              )
+            </p>
+          </div>
+        )
+      )}
+
+      <hr />
+
+      <h2>
+        🎯 Innings 2 Bowling
+      </h2>
+
+      {match.bowling2?.map(
+        (player, index) => (
+          <div key={index}>
+            <p>
+              {player.player}
+              {' - '}
+              {player.overs} Overs,
+              {' '}
+              {player.runs} Runs,
+              {' '}
+              {player.wickets} Wickets
+            </p>
+          </div>
+        )
+      )}
     </div>
   )
 }

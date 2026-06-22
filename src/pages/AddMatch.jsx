@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import teams from '../data/teams'
+import playersData from '../data/players'
 import { updatePlayerStats } from '../utils/updatePlayerStats'
 const players =
   JSON.parse(
