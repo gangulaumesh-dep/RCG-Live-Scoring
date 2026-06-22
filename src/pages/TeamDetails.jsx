@@ -1,16 +1,16 @@
 import { useParams } from 'react-router-dom'
 import teams from '../data/teams'
+import playersData from '../data/players'
 const players =
   JSON.parse(
     localStorage.getItem('players')
-  ) || playersData
-
+  ) || []
 function TeamDetails() {
   const { shortName } = useParams()
   const players =
   JSON.parse(
     localStorage.getItem('players')
-  ) || playersData
+  ) || []
   const team = teams.find(
     (t) => t.shortName === shortName
   )
