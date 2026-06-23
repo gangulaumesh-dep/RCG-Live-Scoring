@@ -111,6 +111,7 @@ const editMatch =
       'editMatch'
     )
   )
+  
   useEffect(() => {
 
   if (!editMatch) return
@@ -746,38 +747,44 @@ const editMatch =
   }
 />
  <button onClick={() => {
-    const newMatch = {
-  id: Date.now(),
-  team1,
-  team2,
-  score1,
-  score2,
-  oversTeam1,
-  oversTeam2,
-  tossWinner,
-  electedTo,
-  winner,
-  manOfTheMatch,
 
-  batting: batting.map((player) => ({
+const newMatch = {
+id: editMatch
+? editMatch.id
+: Date.now(),
+
+team1,
+team2,
+score1,
+score2,
+oversTeam1,
+oversTeam2,
+tossWinner,
+electedTo,
+winner,
+manOfTheMatch,
+
+batting: batting.map((player) => ({
   player: player.player,
   runs: Number(player.runs),
   balls: Number(player.balls),
   fours: Number(player.fours),
   sixes: Number(player.sixes)
 })),
-    bowling: bowling.map((player) => ({
+
+bowling: bowling.map((player) => ({
   player: player.player,
   overs: Number(player.overs),
   runs: Number(player.runs),
   wickets: Number(player.wickets)
-  })),
-      batting2: batting2.map((player) => ({
-    player: player.player,
-    runs: Number(player.runs),
-    balls: Number(player.balls),
-    fours: Number(player.fours),
-    sixes: Number(player.sixes)
+})),
+
+batting2: batting2.map((player) => ({
+  player: player.player,
+  runs: Number(player.runs),
+  balls: Number(player.balls),
+  fours: Number(player.fours),
+  sixes: Number(player.sixes)
 })),
 
 bowling2: bowling2.map((player) => ({
@@ -786,97 +793,148 @@ bowling2: bowling2.map((player) => ({
   runs: Number(player.runs),
   wickets: Number(player.wickets)
 })),
-  result: `${winner} won`
- }
 
-    const oldMatches =
-      JSON.parse(localStorage.getItem("matches")) || []
+result: `${winner} won`
 
-    const updatedMatches = [
-      ...oldMatches,
-      newMatch
-    ]
-    console.log("NEW MATCH:", newMatch)
-    console.log("UPDATED:", updatedMatches)
-    localStorage.setItem(
-      "matches",
-      JSON.stringify(updatedMatches)
-    )
-    console.log("Reached allTimeMatches save")
-    const allTimeMatches =
+
+}
+
+if (editMatch) {
+
+
+const allTimeMatches =
   JSON.parse(
     localStorage.getItem(
       'allTimeMatches'
     )
   ) || []
- console.log("Saving to allTimeMatches")
-allTimeMatches.push(newMatch)
+
+const updatedMatches =
+  allTimeMatches.map(
+    (match) =>
+      match.id === editMatch.id
+        ? newMatch
+        : match
+  )
 
 localStorage.setItem(
   'allTimeMatches',
-  JSON.stringify(allTimeMatches)
+  JSON.stringify(updatedMatches)
 )
-console.log(
-  "allTimeMatches saved",
-  allTimeMatches
+
+localStorage.removeItem(
+  'editMatch'
 )
-    updatePlayerStats(newMatch)
 
-    alert("Match Saved!")
+alert('Match Updated!')
 
-    setTeam1('')
-    setTeam2('')
-    setScore1('')
-    setScore2('')
-    setOversTeam1('')
-    setOversTeam2('')
-    setTossWinner('')
-    setElectedTo('')
-    setWinner('')
-    setManOfTheMatch('')
-    setBatting([
-  {
-    player: '',
-    runs: '',
-    balls: '',
-    fours: '',
-    sixes: ''
-  }
-])
-    setBowling([
-  {
-    player: '',
-    overs: '',
-    runs: '',
-    wickets: ''
-  }
- ])
- setBatting2([
-  {
-    player: '',
-    runs: '',
-    balls: '',
-    fours: '',
-    sixes: ''
-  }
-])
-    setBowling2([
-  {
-    player: '',
-    overs: '',
-    runs: '',
-    wickets: ''
-  }
- ])
-  }}>
-  {
-  editMatch
-    ? 'Update Match'
-    : 'Save Match'
+window.location.href =
+  '/archive'
+
+return
+
 }
- </button>
-    </div>
-  )
+
+const oldMatches =
+JSON.parse(
+localStorage.getItem(
+'matches'
+)
+) || []
+
+const updatedMatches = [
+...oldMatches,
+newMatch
+]
+
+localStorage.setItem(
+'matches',
+JSON.stringify(updatedMatches)
+)
+
+const allTimeMatches =
+JSON.parse(
+localStorage.getItem(
+'allTimeMatches'
+)
+) || []
+
+allTimeMatches.push(newMatch)
+
+localStorage.setItem(
+'allTimeMatches',
+JSON.stringify(allTimeMatches)
+)
+
+updatePlayerStats(newMatch)
+
+localStorage.removeItem(
+'editMatch'
+)
+
+alert('Match Saved!')
+
+setTeam1('')
+setTeam2('')
+setScore1('')
+setScore2('')
+setOversTeam1('')
+setOversTeam2('')
+setTossWinner('')
+setElectedTo('')
+setWinner('')
+setManOfTheMatch('')
+
+setBatting([
+{
+player: '',
+runs: '',
+balls: '',
+fours: '',
+sixes: ''
+}
+])
+
+setBowling([
+{
+player: '',
+overs: '',
+runs: '',
+wickets: ''
+}
+])
+
+setBatting2([
+{
+player: '',
+runs: '',
+balls: '',
+fours: '',
+sixes: ''
+}
+])
+
+setBowling2([
+{
+player: '',
+overs: '',
+runs: '',
+wickets: ''
+}
+])
+
+}}>
+{
+editMatch
+? 'Update Match'
+: 'Save Match'
+} </button>
+
+```
+</div>
+
+
+)
 }
 
 export default AddMatch
